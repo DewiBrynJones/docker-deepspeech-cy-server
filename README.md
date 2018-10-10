@@ -15,6 +15,8 @@ root@be445f33e414:/django-deepspeech-server# python manage.py runserver 0.0.0.0:
 
 Yna http://localhost:5400
 
+(efallai bod y model ar gael hefyd ar weinyddion techiaith o http://macsen-stt.techiaith.cymru/ ) 
+
 ## Macsen  (24-09-2018)
 
 Cwestiynau a adnabyddir (weithiau) gan y model o fewn y wefan:
