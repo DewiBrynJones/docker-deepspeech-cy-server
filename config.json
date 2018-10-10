@@ -1,0 +1,11 @@
+{
+  "deepspeech": {
+    "model" :"/django-deepspeech-server/models/output_graph.pb",
+    "alphabet": "/django-deepspeech-server/models/alphabet.txt",
+    "lm": "/django-deepspeech-server/models/lm.binary",
+    "trie": "/django-deepspeech-server/models/trie",
+    "audiofiledir": "/django-deepspeech-server/audio/",
+    "audiofilelength": "10",
+    "debug": "1"
+  }
+}
