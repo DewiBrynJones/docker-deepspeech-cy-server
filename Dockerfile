@@ -6,7 +6,7 @@ COPY config-macsen.json /django-deepspeech-server/speech_server_main/config/conf
 RUN mkdir -p /django-deepspeech-server/models
 WORKDIR /django-deepspeech-server/models
 
-RUN wget -O - http://techiaith.cymru/deepspeech/models/macsen_180924.tar.gz | tar xvfz -
+RUN wget -O - http://techiaith.cymru/deepspeech/models/macsen_190109.tar.gz | tar xvfz -
 
 WORKDIR /django-deepspeech-server
 RUN mkdir -p audio
