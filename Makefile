@@ -10,8 +10,8 @@ build:
 	
 run: 
 	docker run --name django-deepspeech -it --rm \
-		-v ${PWD}/models/:/django-deepspeech-server/models \
-		-v ${PWD}/local/bin:/django-deepspeech/bin \
+		-v ${PWD}/recordings/:/recordings \
+		-v ${PWD}/local/bin:/django-deepspeech-server/bin \
 		-p 5400:8000 \
 		techiaith/django-deepspeech bash
 

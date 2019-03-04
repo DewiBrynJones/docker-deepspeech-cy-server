@@ -1,9 +1,9 @@
 {
   "deepspeech": {
-    "model" :"/django-deepspeech-server/models/macsen_190208/output_graph.pb",
-    "alphabet": "/django-deepspeech-server/models/macsen_190208/alphabet.txt",
-    "lm": "/django-deepspeech-server/models/macsen_190208/lm.binary",
-    "trie": "/django-deepspeech-server/models/macsen_190208/trie",
+    "model" :"/django-deepspeech-server/models/macsen/output_graph.pb",
+    "alphabet": "/django-deepspeech-server/models/macsen/alphabet.txt",
+    "lm": "/django-deepspeech-server/models/macsen/lm.binary",
+    "trie": "/django-deepspeech-server/models/macsen/trie",
     "audiofiledir": "/django-deepspeech-server/audio/",
     "audiofilelength": "10",
     "debug": "1"

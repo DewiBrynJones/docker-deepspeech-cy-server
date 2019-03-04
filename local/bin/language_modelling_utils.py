@@ -9,6 +9,7 @@ import shlex
 import shutil
 import subprocess
 
+import requests
 
 def execute_shell(cmd):
     print('$ %s' % cmd)
@@ -34,6 +35,16 @@ def save_corpus(corpus, corpus_file_path):
             corpus_file.write(l + '\n')
 
 
+def fetch_corpus(corpus_url, corpus_file_path):
+    r = requests.get("https://api.techiaith.org/assistant/get_all_sentences")
+    data = r.json()
+
+    if data["success"]:
+        with codecs.open(corpus_file_path, 'w', encoding='utf-8') as corpus_file:
+            for r in data["result"]:
+                corpus_file.write(r[0] + '\n')
+
+
 def process_transcript(orig_transcript):
     transcript = orig_transcript.replace("_"," ")
     transcript = transcript.replace("-"," ")
@@ -45,12 +56,12 @@ def create_binary_language_model(corpus_file_path):
 
     # create arpa language model 
     arpa_file_path = corpus_file_path.replace(".txt", ".arpa")
-    lm_cmd = 'lmplz --text %s --arpa %s --o 3 --discount_fallback' % (corpus_file_path, arpa_file_path)
+    lm_cmd = '/django-deepspeech-server/native_client/kenlm/build/bin/lmplz --text %s --arpa %s --o 3 --discount_fallback -S' % (corpus_file_path, arpa_file_path)
     execute_shell(lm_cmd)
 
     # create binary language model
     lm_binary_file_path = os.path.join(os.path.abspath(os.path.join(corpus_file_path,'..')), 'lm.binary')
-    lm_bin_cmd = 'build_binary -a 22 -q 8 trie  %s %s' % (arpa_file_path, lm_binary_file_path)
+    lm_bin_cmd = '/django-deepspeech-server/native_client/kenlm/build/bin/build_binary -a 22 -q 8 trie  %s %s' % (arpa_file_path, lm_binary_file_path)
     execute_shell(lm_bin_cmd)
 
     return lm_binary_file_path
@@ -58,7 +69,7 @@ def create_binary_language_model(corpus_file_path):
 
 def create_trie(trie_file_path, alphabet_file_path, lm_binary_file_path):
     # create trie
-    trie_cmd = 'generate_trie %s %s %s' % (alphabet_file_path, lm_binary_file_path, trie_file_path)
+    trie_cmd = '/django-deepspeech-server/native_client/generate_trie %s %s %s' % (alphabet_file_path, lm_binary_file_path, trie_file_path)
     execute_shell(trie_cmd)
 
     return trie_file_path
