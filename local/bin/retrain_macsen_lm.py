@@ -12,11 +12,11 @@ def main():
    conf = config.ConfigDeepSpeech()
    lmutils.fetch_corpus(CORPUS_URL, CORPUS_TEXT_FILE)
 
-   lm_file_path=conf.get_config('lm')
+   lm_binary_file_path=conf.get_config('lm')
    trie_file_path=conf.get_config('trie')
    alphabet_file_path=conf.get_config('alphabet')
 
-   lm_binary_file_path=lmutils.create_binary_language_model(CORPUS_TEXT_FILE)
+   lmutils.create_binary_language_model(lm_binary_file_path, CORPUS_TEXT_FILE)
    lmutils.create_trie(trie_file_path, alphabet_file_path, lm_binary_file_path)
     
 

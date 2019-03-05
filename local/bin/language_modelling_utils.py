@@ -8,7 +8,7 @@ import codecs
 import shlex
 import shutil
 import subprocess
-
+import tokenization
 import requests
 
 def execute_shell(cmd):
@@ -36,13 +36,18 @@ def save_corpus(corpus, corpus_file_path):
 
 
 def fetch_corpus(corpus_url, corpus_file_path):
+    tokenizer = tokenization.Tokenization()
     r = requests.get("https://api.techiaith.org/assistant/get_all_sentences")
     data = r.json()
 
     if data["success"]:
         with codecs.open(corpus_file_path, 'w', encoding='utf-8') as corpus_file:
             for r in data["result"]:
-                corpus_file.write(r[0] + '\n')
+                line = process_transcript(r[0])
+                line = tokenizer.tokenize(line) 
+                line = ' '.join(line)
+                print (line)
+                corpus_file.write(line + '\n')
 
 
 def process_transcript(orig_transcript):
@@ -52,15 +57,15 @@ def process_transcript(orig_transcript):
     return transcript 
 
 
-def create_binary_language_model(corpus_file_path):
+def create_binary_language_model(lm_binary_file_path, corpus_file_path):
 
     # create arpa language model 
     arpa_file_path = corpus_file_path.replace(".txt", ".arpa")
-    lm_cmd = '/django-deepspeech-server/native_client/kenlm/build/bin/lmplz --text %s --arpa %s --o 3 --discount_fallback -S' % (corpus_file_path, arpa_file_path)
+    lm_cmd = '/django-deepspeech-server/native_client/kenlm/build/bin/lmplz --text %s --arpa %s --o 6 --discount_fallback' % (corpus_file_path, arpa_file_path)
     execute_shell(lm_cmd)
 
     # create binary language model
-    lm_binary_file_path = os.path.join(os.path.abspath(os.path.join(corpus_file_path,'..')), 'lm.binary')
+    #lm_binary_file_path = os.path.join(os.path.abspath(os.path.join(corpus_file_path,'..')), 'lm.binary')
     lm_bin_cmd = '/django-deepspeech-server/native_client/kenlm/build/bin/build_binary -a 22 -q 8 trie  %s %s' % (arpa_file_path, lm_binary_file_path)
     execute_shell(lm_bin_cmd)
 

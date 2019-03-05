@@ -7,6 +7,7 @@ RUN apt-get update \
 COPY django-deepspeech-server /django-deepspeech-server
 COPY config-macsen.json /django-deepspeech-server/speech_server_main/config/config.json
 
+RUN mkdir -p /django-deepspeech-server/audio
 RUN mkdir -p /django-deepspeech-server/models
 WORKDIR /django-deepspeech-server/models
 
@@ -15,7 +16,7 @@ RUN wget -O - http://techiaith.cymru/deepspeech/models/macsen.tar.gz | tar xvfz 
 WORKDIR /django-deepspeech-server
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install deepspeech scipy six
+RUN pip3 install deepspeech scipy six requests
 
 RUN python manage.py migrate
 
