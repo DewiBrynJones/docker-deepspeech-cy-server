@@ -43,7 +43,7 @@ def fetch_corpus(corpus_url, corpus_file_path):
     if data["success"]:
         with codecs.open(corpus_file_path, 'w', encoding='utf-8') as corpus_file:
             for r in data["result"]:
-                line = process_transcript(r[0])
+                line = process_transcript(r)
                 line = tokenizer.tokenize(line) 
                 line = ' '.join(line)
                 print (line)
