@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  deepspeechapp:
+    build: .
+    command: gunicorn --bind :8000 SpeechServer.wsgi:application
+    volumes:
+      - ./recordings/:/recordings 
+      - ./local/bin/:/django-deepspeech-server/bin
+      - ./django-deepspeech-server/speech_server_main/static/:/django-deepspeech-server/speech_server_main/static/
+    networks:
+      - deepspeech_nginx_network
+
+  nginx:
+    image: nginx:1.15.9
+    ports: 
+      - 5400:80
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./django-deepspeech-server/speech_server_main/static/:/django-deepspeech-server/speech_server_main/static/
+    depends_on:
+      - deepspeechapp
+    networks:
+      - deepspeech_nginx_network
+
+networks:
+  deepspeech_nginx_network:
+    driver: bridge
+

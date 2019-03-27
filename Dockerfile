@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.6
 
 RUN apt-get update \ 
     && apt-get install -q -y --no-install-recommends cmake libboost-all-dev vim \
@@ -16,7 +16,7 @@ RUN wget -O - http://techiaith.cymru/deepspeech/models/macsen.tar.gz | tar xvfz 
 WORKDIR /django-deepspeech-server
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install deepspeech scipy six requests
+RUN pip3 install deepspeech scipy six requests gunicorn
 
 RUN python manage.py migrate
 
