@@ -1,4 +1,4 @@
-# docker-deepspeech-server-cy
+# docker-deepspeech-cy-server
 
 ```
 $ make
