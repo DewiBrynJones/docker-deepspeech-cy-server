@@ -5,7 +5,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY django-deepspeech-server /django-deepspeech-server
-COPY config-macsen.json /django-deepspeech-server/speech_server_main/config/config.json
+COPY config.json /django-deepspeech-server/speech_server_main/config/config.json
 
 RUN mkdir -p /django-deepspeech-server/audio
 RUN mkdir -p /django-deepspeech-server/models
