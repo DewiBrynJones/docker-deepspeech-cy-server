@@ -46,12 +46,10 @@ def fetch_corpus(corpus_url, corpus_file_path):
                 line = process_transcript(r[0])
                 line = tokenizer.tokenize(line) 
                 line = ' '.join(line)
-                print (line)
                 corpus_file.write(line + '\n')
 
 
 def process_transcript(orig_transcript):
-    print (orig_transcript)
     transcript = orig_transcript.replace("_"," ")
     transcript = transcript.replace("-"," ")
     transcript = transcript.lower()
