@@ -23,7 +23,8 @@ RUN python manage.py migrate
 #
 RUN mkdir -p native_client
 WORKDIR /django-deepspeech-server/native_client
-RUN wget https://raw.githubusercontent.com/mozilla/DeepSpeech/master/util/taskcluster.py
+#RUN wget https://raw.githubusercontent.com/mozilla/DeepSpeech/master/util/taskcluster.py
+RUN wget https://raw.githubusercontent.com/mozilla/DeepSpeech/v0.4.0/util/taskcluster.py
 RUN python taskcluster.py --target /django-deepspeech-server/native_client
 
 #
